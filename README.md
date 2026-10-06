@@ -2,6 +2,10 @@
 
 Preview your local web project inside a realistic phone, right next to your code in VS Code.
 
+![iPhone 15 preview](images/iPhone15.png)
+![iPhone 15 Pro Max preview](images/iPhone15PM.png)
+![Pixel 10 preview](images/GoogleP10.png)
+
 ## Features
 
 - **Devices:** iPhone 15, iPhone 15 Pro Max, Google Pixel 10.
