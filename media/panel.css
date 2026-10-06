@@ -1,0 +1,228 @@
+/* Colores fijos: nada depende del tema de VS Code */
+:root { color-scheme: light; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  background: #1c1f26;
+  color: #e6e8ec;
+  font: 13px/1.4 system-ui, sans-serif;
+}
+body { display: flex; flex-direction: column; }
+
+/* ---------- Barra de herramientas ---------- */
+.bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  padding: 8px 12px;
+  background: #262a33;
+  border-bottom: 1px solid #343946;
+}
+.bar select, .bar input, .bar button {
+  height: 28px;
+  border: 1px solid #3d4350;
+  border-radius: 6px;
+  background: #1c1f26;
+  color: #e6e8ec;
+  padding: 0 10px;
+  font: inherit;
+}
+.bar button { cursor: pointer; }
+.bar button:hover { background: #333845; }
+.bar select:focus-visible, .bar input:focus-visible, .bar button:focus-visible {
+  outline: 2px solid #6aa9ff;
+  outline-offset: 1px;
+}
+.bar input { flex: 1; min-width: 140px; }
+.size { color: #8d94a3; margin-left: auto; }
+
+/* ---------- Escenario ---------- */
+.stage { flex: 1; display: flex; overflow: auto; padding: 20px; box-sizing: border-box; }
+.holder { margin: auto; flex: none; }
+
+/* ---------- Marco del teléfono ---------- */
+.frame {
+  --bezel: 12px;
+  --frame-color: #3a3a3c;
+  position: relative;
+  box-sizing: border-box;
+  padding: var(--bezel);
+  background: var(--frame-color);
+  transform-origin: top left;
+  box-shadow: 0 0 0 2px rgba(255,255,255,.14) inset, 0 20px 50px rgba(0,0,0,.5);
+}
+.frame[data-device="iphone15"]       { --frame-color: #4b4650; }
+.frame[data-device="iphone15promax"] { --frame-color: #8a8378; }
+.frame[data-device="pixel10"]        { --frame-color: #2a2f34; }
+
+/* botones laterales */
+.frame::before, .frame::after {
+  content: '';
+  position: absolute;
+  background: var(--frame-color);
+  border-radius: 2px;
+}
+.frame::before { left: -3px; top: 150px; width: 3px; height: 56px; box-shadow: 0 74px 0 var(--frame-color); }
+.frame::after  { right: -3px; top: 220px; width: 3px; height: 96px; }
+.frame[data-device="pixel10"]::before { display: none; }
+.frame[data-device="pixel10"]::after  { top: 170px; height: 64px; box-shadow: 0 96px 0 var(--frame-color); }
+.frame[data-land="1"]::before, .frame[data-land="1"]::after { display: none; }
+
+/* ---------- Pantalla ---------- */
+.screen {
+  --bar-bg: #0c0c0f;
+  --bar-fg: #f2f2f5;
+  --pill: #2a2a2f;
+  --accent: #6aa6ff;
+  --status: 54px;
+  --top: 0px;
+  --bottom: 0px;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #000;
+  box-shadow: 0 0 0 4px #000;
+}
+.screen[data-chrome="light"] {
+  --bar-bg: #f6f6f8;
+  --bar-fg: #111114;
+  --pill: #e3e3e9;
+  --accent: #1f6feb;
+}
+
+iframe {
+  position: absolute;
+  left: 0;
+  top: calc(var(--status) + var(--top));
+  height: calc(100% - var(--status) - var(--top) - var(--bottom));
+  display: block;
+  border: 0;
+  /* clave: la página se ve en claro aunque VS Code use tema oscuro */
+  color-scheme: light;
+  background: #ffffff;
+}
+
+/* ---------- Barra de estado ---------- */
+.status {
+  position: absolute;
+  left: 0; right: 0; top: 0;
+  height: var(--status);
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  background: var(--bar-bg);
+  color: var(--bar-fg);
+  font-weight: 600;
+  z-index: 2;
+}
+.screen[data-land="1"] .status { display: none; }
+.clock { font-size: 17px; flex: 0 0 96px; text-align: center; letter-spacing: .2px; }
+.sysicons { display: flex; align-items: center; justify-content: center; gap: 6px; flex: 0 0 96px; }
+.sysicons svg { display: block; height: 12px; width: auto; }
+
+.screen[data-os="android"] .status { padding: 6px 22px 0 30px; font-weight: 500; }
+.screen[data-os="android"] .clock { flex: none; font-size: 15px; text-align: left; }
+.screen[data-os="android"] .sysicons { flex: none; justify-content: flex-end; gap: 7px; }
+
+/* ---------- Iconos y pastilla de URL ---------- */
+.ic { width: 24px; height: 24px; flex: none; }
+.ic.sm { width: 16px; height: 16px; }
+.clickable { cursor: pointer; }
+.urlpill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  min-width: 0;
+  padding: 0 14px;
+  box-sizing: border-box;
+  border-radius: 20px;
+  background: var(--pill);
+  font-size: 14px;
+  white-space: nowrap;
+}
+.host { overflow: hidden; text-overflow: ellipsis; }
+
+/* ---------- Chrome (Android) ---------- */
+.topbar {
+  position: absolute;
+  left: 0; right: 0;
+  top: var(--status);
+  height: var(--top);
+  box-sizing: border-box;
+  display: none;
+  align-items: center;
+  gap: 10px;
+  padding: 0 12px;
+  background: var(--bar-bg);
+  color: var(--bar-fg);
+  z-index: 2;
+}
+.screen[data-os="android"] .topbar { display: flex; }
+.topbar .urlpill { flex: 1; }
+.tabbox {
+  width: 24px; height: 24px;
+  box-sizing: border-box;
+  border: 2px solid currentColor;
+  border-radius: 6px;
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+  font-weight: 700;
+  flex: none;
+}
+
+.navbar {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: var(--bottom);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: var(--bar-bg);
+  z-index: 2;
+}
+.navbar i { width: 108px; height: 4px; border-radius: 2px; background: var(--bar-fg); opacity: .8; }
+.screen[data-os="android"] .navbar { display: flex; }
+.screen[data-os="android"][data-land="1"] .navbar { display: none; }
+
+/* ---------- Safari (iOS) ---------- */
+.bottombar {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: var(--bottom);
+  display: none;
+  flex-direction: column;
+  background: var(--bar-bg);
+  color: var(--bar-fg);
+  z-index: 2;
+}
+.screen[data-os="ios"] .bottombar { display: flex; }
+.row-pill { height: 50px; box-sizing: border-box; padding: 5px 14px 3px; display: flex; flex: none; }
+.urlpill.ios { flex: 1; justify-content: space-between; border-radius: 14px; height: 100%; font-size: 15px; }
+.urlpill.ios .aa { font-size: 13px; opacity: .85; }
+.urlpill.ios .center { display: flex; align-items: center; gap: 6px; min-width: 0; font-weight: 500; }
+.tools { height: 44px; flex: none; display: flex; justify-content: space-around; align-items: center; color: var(--accent); }
+.homeind { flex: 1; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 8px; }
+.homeind i { width: 136px; height: 5px; border-radius: 3px; background: var(--bar-fg); }
+.screen[data-land="1"] .tools, .screen[data-land="1"] .homeind { display: none; }
+
+/* ---------- Isla dinámica / cámara ---------- */
+.cutout {
+  position: absolute;
+  top: 11px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #000;
+  border-radius: 999px;
+  pointer-events: none;
+  z-index: 3;
+}
+.cutout.island { width: 112px; height: 32px; }
+.cutout.punch  { width: 22px; height: 22px; top: 12px; }
+.cutout.hidden { display: none; }

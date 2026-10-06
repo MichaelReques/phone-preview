@@ -1,0 +1,60 @@
+{
+  "name": "phone-preview",
+  "displayName": "Phone Preview",
+  "description": "Preview your local web project inside a realistic iPhone 15, iPhone 15 Pro Max or Google Pixel 10 frame, with Safari/Chrome bars, live clock and auto-reload.",
+  "version": "0.0.1",
+  "publisher": "michael-reques",
+  "author": {
+    "name": "Michael Reques"
+  },
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Other",
+    "Visualization"
+  ],
+  "keywords": [
+    "mobile",
+    "preview",
+    "responsive",
+    "iphone",
+    "pixel",
+    "simulator",
+    "device",
+    "viewport",
+    "live server",
+    "astro",
+    "vite"
+  ],
+  "icon": "media/icon.png",
+  "galleryBanner": {
+    "color": "#1c1f26",
+    "theme": "dark"
+  },
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "phonePreview.open",
+        "title": "Phone Preview: Open"
+      }
+    ],
+    "configuration": {
+      "title": "Phone Preview",
+      "properties": {
+        "phonePreview.defaultUrl": {
+          "type": "string",
+          "default": "http://localhost:5500",
+          "description": "URL loaded when the panel opens."
+        },
+        "phonePreview.autoReloadOnSave": {
+          "type": "boolean",
+          "default": true,
+          "description": "Reload the preview when you save a file."
+        }
+      }
+    }
+  }
+}
